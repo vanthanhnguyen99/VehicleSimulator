@@ -54,17 +54,21 @@ int main()
 
    int rc = 0;  // Actual number of bytes read by function read()
    int x;
-   cout << "Size = " << sizeof(x) << endl;
+
+   
+
+   int *type = new int;
+   *type = 1;
+   send(socketHandle,type,sizeof(int),0);
+   delete type;
+
    bool *p = new bool;
    recv(socketHandle,p,sizeof(bool),0);
 
    if (*p)
    {
-      int *type = new int;
-      *type = 1;
-      send(socketHandle,type,sizeof(int),0);
       cout << "Server accepted" << endl;
-      delete type;
+      
    }
    else
    {
@@ -106,12 +110,24 @@ int main()
    convertStringToCharArray(deviceName,value->name);
    randomLocation(value);
    send(socketHandle,value,sizeof(cord),0);
+
+ 
+
+   bool *confirm = new bool;
+
    while (*p)
    {
+      rc = recv(socketHandle,confirm,1,0);
+      if (rc == 0)
+      {
+         cout << "Lost Connnection" << endl;
+         break;
+      }
+
       simulateRunning(value);
-      // cout << (float) (value->x) << "," <<(float) (value->y) << endl;
       send(socketHandle,value,sizeof(cord),0);
       sleep(2);
+      
    }
    close(socketHandle);
 }
