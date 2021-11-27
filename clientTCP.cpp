@@ -19,8 +19,8 @@ int main()
    struct sockaddr_in remoteSocketInfo;
    struct hostent *hPtr;
    int socketHandle;
-   const char *remoteHost= "192.168.1.8";
-   int portNumber = 8083;
+   const char *remoteHost= "192.168.31.84";
+   int portNumber = 8081;
    bzero(&remoteSocketInfo, sizeof(sockaddr_in));  // Clear structure memory
 
    // Get system information
